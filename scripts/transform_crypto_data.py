@@ -105,6 +105,7 @@ def transform_data():
 
         df["price_range_24h"] = df["high_24h"] - df["low_24h"]
         df["market_cap_category"] = df["market_cap"].apply(categorize_market_cap)
+        df["snapshot_timestamp"] = pd.Timestamp.now().now()
 
         if df.empty:
             logging.error("Dataframe is empty")
