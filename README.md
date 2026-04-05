@@ -48,17 +48,6 @@ API → Raw JSON → Transformation (pandas) → PostgreSQL
 - logging
 - pathlib
 
-## Technologies Used
-
-- Python
-- pandas
-- requests (API calls)
-- PostgreSQL
-- SQLAlchemy
-- python-dotenv
-- logging
-- pathlib
-
 ## Project Structure
 
 project2_crypto_pipeline/
