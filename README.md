@@ -16,12 +16,6 @@ The goal of this project is to build a production-style ETL pipeline that:
 - Supports incremental loading (append-only design)
 - Tracks historical data using timestamps
 
-## Overview
-
-This project is an end-to-end Data Engineering pipeline that extracts cryptocurrency market data from a public API, transforms it into a clean and structured format, and loads it into a PostgreSQL database for analysis.
-
-The pipeline is designed to simulate a real-world data workflow, including raw data ingestion, transformation, and incremental loading into a database.
-
 ## Pipeline Architecture
 
 The pipeline follows a layered architecture:
