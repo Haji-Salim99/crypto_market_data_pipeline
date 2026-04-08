@@ -1,38 +1,41 @@
 import os
 import json
 import logging
-import requests
 from datetime import datetime
 from pathlib import Path
+
+import requests
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
+
 load_dotenv()
 
-# Define directories
 BASE_DIR = Path(__file__).resolve().parent.parent
 RAW_DATA_DIR = BASE_DIR / "data" / "raw"
 LOGS_DIR = BASE_DIR / "logs"
 
-# Ensure directories exist
 RAW_DATA_DIR.mkdir(parents=True, exist_ok=True)
 LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
-logs_file = LOGS_DIR / "extract.log"
+log_file = LOGS_DIR / "extract.log"
+# Set up logging
+logger = logging.getLogger("extract_logger")
+logger.setLevel(logging.INFO)
 
-#configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format= "%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler(logs_file),
-        logging.StreamHandler()
-    ]
-)
+if logger.hasHandlers():
+    logger.handlers.clear()
+
+file_handler = logging.FileHandler(log_file)
+stream_handler = logging.StreamHandler()
+
+formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+file_handler.setFormatter(formatter)
+stream_handler.setFormatter(formatter)
+
+logger.addHandler(file_handler)
+logger.addHandler(stream_handler)
 
 
-
-# function to extract data from CoinGecko API
 def extract_data():
     api_base_url = os.getenv("API_BASE_URL")
     vs_currency = os.getenv("VS_CURRENCY", "usd")
@@ -40,9 +43,9 @@ def extract_data():
     page = os.getenv("PAGE", "1")
 
     if not api_base_url:
-        logging.error("API_BASE_URL is missing in the .env file")
-        raise ValueError("API_BASE_URL is missing in the .env file")
-    
+        logger.error("API_BASE_URL is missing in the .env file.")
+        raise ValueError("API_BASE_URL is missing in the .env file.")
+
     endpoint = f"{api_base_url}/coins/markets"
 
     params = {
@@ -54,37 +57,31 @@ def extract_data():
     }
 
     try:
-        logging.info(f"Sending request to {endpoint}")
+        logger.info("Sending request to CoinGecko API...")
         response = requests.get(endpoint, params=params, timeout=30)
         response.raise_for_status()
 
         data = response.json()
 
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        output_path = RAW_DATA_DIR / f"extracted_crypto_market_data on {timestamp}.json"
+        output_path = RAW_DATA_DIR / f"crypto_market_{timestamp}.json"
+
         with open(output_path, "w", encoding="utf-8") as file:
             json.dump(data, file, indent=4)
 
-            logging.info(f"Raw data successfully extracted and saved to {output_path}")
-            logging.info(f"Number of records extracted: {len(data)}")
+        logger.info(f"Raw data saved to: {output_path}")
+        logger.info(f"Number of records fetched: {len(data)}")
 
-            return output_path
-        
+        return output_path
+
     except requests.exceptions.RequestException as e:
-            logging.error(f"API request failed: {e}")
-            raise
-    
+        logger.error(f"API request failed: {e}")
+        raise
+
     except Exception as e:
-         logging.error(f"Unexpected error during data extraction: {e}")
-         raise
-    
+        logger.error(f"Unexpected error during extraction: {e}")
+        raise
+
 
 if __name__ == "__main__":
-     extract_data()
-
-
-
-        
-
-
-
+    extract_data()
