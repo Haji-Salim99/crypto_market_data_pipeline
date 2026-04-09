@@ -98,6 +98,7 @@ The pipeline is configured to run automatically:
 
 ## Project Structure
 
+```
 crypto_market_data_pipeline/
 │
 ├── images/
@@ -128,6 +129,8 @@ crypto_market_data_pipeline/
 ├── .env
 ├── requirements.txt
 ├── README.md
+
+```
 
 ## Screenshots
 
