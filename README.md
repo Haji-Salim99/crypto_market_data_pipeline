@@ -21,7 +21,6 @@ The goal of this project is to build a production-style ETL pipeline that:
 ## Pipeline Architecture
 
 The pipeline follows a layered architecture:
-
 API → Raw JSON → Transformation (pandas) → PostgreSQL
 
 1. Extraction Layer:
@@ -43,7 +42,7 @@ API → Raw JSON → Transformation (pandas) → PostgreSQL
 
 The pipeline is fully containerized using Docker and Docker Compose.
 
-### Services:
+### Services
 
 - ETL Pipeline Container
   - Runs extraction, transformation, and loading
@@ -51,11 +50,9 @@ The pipeline is fully containerized using Docker and Docker Compose.
   - Stores processed cryptocurrency data
 - Airflow Services (scheduler + webserver + metadata DB)
 
-### Workflow:
+### Workflow
 
-Airflow Scheduler
-↓
-ETL Tasks → PostgreSQL Database
+Airflow Scheduler → ETL Tasks → PostgreSQL Database
 
 ## Workflow Orchestration with Apache Airflow
 
@@ -208,7 +205,7 @@ docker compose run etl_pipeline
 3. To stop containers:
 docker compose down
 
-### Airflow Execution
+## Airflow Execution
 
 1. Start Airflow:
 docker compose up -d
