@@ -1,0 +1,36 @@
+services:
+    postgres:
+      image: postgres:15
+      container_name: crypto_postgress
+      environment:
+        POSTGRES_DB: crypto_db
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+      ports:
+        - "5432:5432"
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+
+    etl_pipeline:
+      build: .
+      container_name: crypto_etl_pipeline
+      depends_on:
+        - postgres
+      environment:
+        DB_HOST: postgres
+        DB_PORT: 5432
+        DB_NAME: crypto_db
+        DB_USER: postgres
+        DB_PASSWORD: postgres
+        API_BASE_URL: https://api.coingecko.com/api/v3
+        VS_CURRENCY: usd
+        PER_PAGE: 50
+        PAGE: 1
+
+      volumes:
+      - ./logs:/app/logs
+      - ./data/raw:/app/data/raw
+      - ./data/processed:/app/data/processed
+
+volumes:
+  postgres_data:
