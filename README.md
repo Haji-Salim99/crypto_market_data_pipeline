@@ -4,17 +4,18 @@
 
 This project is an end-to-end Data Engineering pipeline that extracts cryptocurrency market data from a public API, transforms it into a clean and structured format, and loads it into a PostgreSQL database for analysis.
 
-The pipeline is designed to simulate a real-world data workflow, including raw data ingestion, transformation, and incremental loading into a database.
+The pipeline simulates a real-world data workflow, including raw data ingestion, transformation, incremental loading, and containerized deployment using Docker.
 
 ## Objective
 
 The goal of this project is to build a production-style ETL pipeline that:
 
 - Extracts real-time cryptocurrency data from an external API
-- Cleans and transforms the data using Python (pandas)
-- Stores the data in PostgreSQL
+- Cleans and transforms data using Python (pandas)
+- Stores data in PostgreSQL
 - Supports incremental loading (append-only design)
 - Tracks historical data using timestamps
+- Runs in a reproducible containerized environment using Docker
 
 ## Pipeline Architecture
 
@@ -37,7 +38,24 @@ API → Raw JSON → Transformation (pandas) → PostgreSQL
    - Uses incremental loading (append mode)
    - Preserves historical snapshots
 
-   ## Technologies Used So Far
+## Containerized Architecture (Docker)
+
+The pipeline is fully containerized using Docker and Docker Compose.
+
+### Services:
+
+- ETL Pipeline Container
+  - Runs extraction, transformation, and loading
+- PostgreSQL Container
+  - Stores processed cryptocurrency data
+
+### Workflow:
+
+Docker Compose
+↓
+ETL Container → PostgreSQL Container
+
+## Technologies Used
 
 - Python
 - pandas
@@ -47,40 +65,49 @@ API → Raw JSON → Transformation (pandas) → PostgreSQL
 - python-dotenv
 - logging
 - pathlib
+- Docker
+- Docker Compose
 
 ## Project Structure
 
 project2_crypto_pipeline/
 │
 ├── data/
-│   ├── raw/              # Raw JSON data from API
-│   └── processed/        # Cleaned CSV data
+│ ├── raw/ 
+│ └── processed/ 
 │
 ├── scripts/
-│   ├── extract_api_data.py
-│   ├── transform_crypto_data.py
-│   ├── load_to_postgres.py
+│ ├── extract_api_data.py
+│ ├── transform_crypto_data.py
+│ ├── load_to_postgres.py
+│ ├── run_pipeline.py
 │
-├── logs/                 # Log files for each stage
+├── logs/ 
 │
-├── .env                  # Environment variables
+├── Dockerfile
+├── docker-compose.yml
+├── .dockerignore
+│
+├── .env # Environment variables
 ├── requirements.txt
 ├── README.md
 
-## Features Implemented So Far
+## Features Implemented
 
 - API data extraction (CoinGecko)
-- Raw data storage (JSON files)
-- Data transformation with pandas
+- Raw data storage (JSON layer)
+- Data transformation using pandas
 - Feature engineering:
   - price_range_24h
   - market_cap_category
   - snapshot_timestamp
-- Logging (file + console)
-- Path handling using pathlib
-- Environment configuration using .env
-- Incremental data loading (append mode)
-- Automatic table creation in PostgreSQL
+- Incremental data loading (append-only)
+- Logging per pipeline stage (extract, transform, load, pipeline)
+- Environment configuration using `.env`
+- Modular pipeline structure
+- Full pipeline orchestration via `run_pipeline.py`
+- Containerization using Docker
+- Multi-service orchestration using Docker Compose
 
 ## Incremental Loading
 
@@ -94,49 +121,45 @@ Instead of overwriting existing data, each run adds new records with a timestamp
 
 Each record includes a snapshot_timestamp to track when the data was collected.
 
-## How to Run
+## How to Run (Local)
 
 1. Install dependencies:
-
 pip install -r requirements.txt
 
 2. Set up environment variables in `.env`
 
 3. Run extraction:
-
 python scripts/extract_api_data.py
 
 4. Run transformation:
-
 python scripts/transform_crypto_data.py
 
 5. Load into PostgreSQL:
-
 python scripts/load_to_postgres.py
+
+## How to Run (Docker)
+
+1. Build and start services:
+docker compose up --build
+
+2. To rerun the ETL pipeline:
+docker compose run etl_pipeline
+
+3. To stop containers:
+docker compose down
 
 ## Example SQL Queries
 
 Check total records:
-
 SELECT COUNT(*) FROM crypto_market_data;
 
 View recent data:
-
 SELECT * FROM crypto_market_data
 ORDER BY snapshot_timestamp DESC
 LIMIT 10;
 
 Check incremental loading:
-
 SELECT snapshot_timestamp, COUNT(*)
 FROM crypto_market_data
 GROUP BY snapshot_timestamp
 ORDER BY snapshot_timestamp;
-
-## Future Improvements
-
-- Add Airflow for orchestration
-- Dockerize the pipeline
-- Add data quality checks
-- Build dashboards (Power BI / Streamlit)
-- Implement partitioning for large datasets
