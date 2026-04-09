@@ -1,0 +1,24 @@
+[2026-04-09T12:44:00.497+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-04-09T12:44:00.572+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: crypto_market_data_pipeline.extract_api_data scheduled__2026-04-09T12:42:00+00:00 [queued]>
+[2026-04-09T12:44:00.597+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: crypto_market_data_pipeline.extract_api_data scheduled__2026-04-09T12:42:00+00:00 [queued]>
+[2026-04-09T12:44:00.605+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-04-09T12:44:00.648+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): extract_api_data> on 2026-04-09 12:42:00+00:00
+[2026-04-09T12:44:00.686+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62 DeprecationWarning: This process (pid=259) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-04-09T12:44:00.685+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'crypto_market_data_pipeline', 'extract_api_data', 'scheduled__2026-04-09T12:42:00+00:00', '--job-id', '18', '--raw', '--subdir', 'DAGS_FOLDER/crypto_pipeline_dag.py', '--cfg-path', '/tmp/tmpedcxu0zz']
+[2026-04-09T12:44:00.688+0000] {standard_task_runner.py:64} INFO - Started process 260 to run task
+[2026-04-09T12:44:00.688+0000] {standard_task_runner.py:91} INFO - Job 18: Subtask extract_api_data
+[2026-04-09T12:44:00.799+0000] {task_command.py:426} INFO - Running <TaskInstance: crypto_market_data_pipeline.extract_api_data scheduled__2026-04-09T12:42:00+00:00 [running]> on host fc34df6cc428
+[2026-04-09T12:44:00.976+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='haji' AIRFLOW_CTX_DAG_ID='crypto_market_data_pipeline' AIRFLOW_CTX_TASK_ID='extract_api_data' AIRFLOW_CTX_EXECUTION_DATE='2026-04-09T12:42:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-04-09T12:42:00+00:00'
+[2026-04-09T12:44:00.977+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-04-09T12:44:00.996+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2026-04-09T12:44:00.998+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'python /opt/***/scripts/extract_api_data.py']
+[2026-04-09T12:44:01.010+0000] {subprocess.py:86} INFO - Output:
+[2026-04-09T12:44:01.649+0000] {subprocess.py:93} INFO - 2026-04-09 12:44:01,649 - INFO - Sending request to CoinGecko API...
+[2026-04-09T12:44:02.178+0000] {subprocess.py:93} INFO - 2026-04-09 12:44:02,178 - INFO - Raw data saved to: /opt/***/data/raw/crypto_market_2026-04-09_12-44-02.json
+[2026-04-09T12:44:02.179+0000] {subprocess.py:93} INFO - 2026-04-09 12:44:02,178 - INFO - Number of records fetched: 50
+[2026-04-09T12:44:02.224+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2026-04-09T12:44:02.226+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-04-09T12:44:03.053+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=crypto_market_data_pipeline, task_id=extract_api_data, run_id=scheduled__2026-04-09T12:42:00+00:00, execution_date=20260409T124200, start_date=20260409T124400, end_date=20260409T124403
+[2026-04-09T12:44:04.170+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-04-09T12:44:04.242+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-04-09T12:44:04.473+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

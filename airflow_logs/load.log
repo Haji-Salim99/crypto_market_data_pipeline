@@ -1,0 +1,40 @@
+2026-04-09 12:00:07,783 - INFO - Connected to PostgreSQL successfully
+2026-04-09 12:00:08,420 - INFO - Latest processed file selected: /opt/airflow/data/processed/cleaned_crypto_data_2026-04-09_12-00-04.csv
+2026-04-09 12:00:08,556 - INFO - Loaded DataFrame with shape: (50, 19)
+2026-04-09 12:00:09,106 - INFO - Data successfully loaded into table: crypto_market_data
+2026-04-09 12:00:09,107 - INFO - Rows inserted: 50
+2026-04-09 12:24:00,501 - INFO - Connected to PostgreSQL successfully
+2026-04-09 12:24:00,520 - INFO - Latest processed file selected: /opt/airflow/data/processed/cleaned_crypto_data_2026-04-09_12-23-56.csv
+2026-04-09 12:24:00,547 - INFO - Loaded DataFrame with shape: (50, 19)
+2026-04-09 12:24:00,647 - INFO - Data successfully loaded into table: crypto_market_data
+2026-04-09 12:24:00,648 - INFO - Rows inserted: 50
+2026-04-09 12:38:51,894 - INFO - Connected to PostgreSQL successfully
+2026-04-09 12:38:51,926 - INFO - Latest processed file selected: /opt/airflow/data/processed/cleaned_crypto_data_2026-04-09_12-38-48.csv
+2026-04-09 12:38:51,958 - INFO - Loaded DataFrame with shape: (50, 19)
+2026-04-09 12:38:52,087 - INFO - Data successfully loaded into table: crypto_market_data
+2026-04-09 12:38:52,088 - INFO - Rows inserted: 50
+2026-04-09 12:40:11,623 - INFO - Connected to PostgreSQL successfully
+2026-04-09 12:40:11,811 - INFO - Latest processed file selected: /opt/airflow/data/processed/cleaned_crypto_data_2026-04-09_12-40-06.csv
+2026-04-09 12:40:11,820 - INFO - Loaded DataFrame with shape: (50, 19)
+2026-04-09 12:40:12,450 - INFO - Data successfully loaded into table: crypto_market_data
+2026-04-09 12:40:12,453 - INFO - Rows inserted: 50
+2026-04-09 12:42:08,008 - INFO - Connected to PostgreSQL successfully
+2026-04-09 12:42:08,027 - INFO - Latest processed file selected: /opt/airflow/data/processed/cleaned_crypto_data_2026-04-09_12-42-05.csv
+2026-04-09 12:42:08,033 - INFO - Loaded DataFrame with shape: (50, 19)
+2026-04-09 12:42:08,084 - INFO - Data successfully loaded into table: crypto_market_data
+2026-04-09 12:42:08,086 - INFO - Rows inserted: 50
+2026-04-09 12:44:10,670 - INFO - Connected to PostgreSQL successfully
+2026-04-09 12:44:10,687 - INFO - Latest processed file selected: /opt/airflow/data/processed/cleaned_crypto_data_2026-04-09_12-44-08.csv
+2026-04-09 12:44:10,693 - INFO - Loaded DataFrame with shape: (50, 19)
+2026-04-09 12:44:10,745 - INFO - Data successfully loaded into table: crypto_market_data
+2026-04-09 12:44:10,745 - INFO - Rows inserted: 50
+2026-04-09 12:46:08,210 - INFO - Connected to PostgreSQL successfully
+2026-04-09 12:46:08,230 - INFO - Latest processed file selected: /opt/airflow/data/processed/cleaned_crypto_data_2026-04-09_12-46-04.csv
+2026-04-09 12:46:08,239 - INFO - Loaded DataFrame with shape: (50, 19)
+2026-04-09 12:46:08,294 - INFO - Data successfully loaded into table: crypto_market_data
+2026-04-09 12:46:08,295 - INFO - Rows inserted: 50
+2026-04-09 12:48:11,256 - INFO - Connected to PostgreSQL successfully
+2026-04-09 12:48:11,284 - INFO - Latest processed file selected: /opt/airflow/data/processed/cleaned_crypto_data_2026-04-09_12-48-06.csv
+2026-04-09 12:48:11,296 - INFO - Loaded DataFrame with shape: (50, 19)
+2026-04-09 12:48:11,366 - INFO - Data successfully loaded into table: crypto_market_data
+2026-04-09 12:48:11,368 - INFO - Rows inserted: 50

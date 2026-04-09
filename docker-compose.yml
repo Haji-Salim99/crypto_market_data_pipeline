@@ -1,36 +1,137 @@
 services:
-    postgres:
-      image: postgres:15
-      container_name: crypto_postgress
-      environment:
-        POSTGRES_DB: crypto_db
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
-      ports:
-        - "5432:5432"
-      volumes:
-        - postgres_data:/var/lib/postgresql/data
+  postgres:
+    image: postgres:15
+    container_name: crypto_postgres
+    environment:
+      POSTGRES_DB: crypto_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
-    etl_pipeline:
-      build: .
-      container_name: crypto_etl_pipeline
-      depends_on:
-        - postgres
-      environment:
-        DB_HOST: postgres
-        DB_PORT: 5432
-        DB_NAME: crypto_db
-        DB_USER: postgres
-        DB_PASSWORD: postgres
-        API_BASE_URL: https://api.coingecko.com/api/v3
-        VS_CURRENCY: usd
-        PER_PAGE: 50
-        PAGE: 1
-
-      volumes:
+  etl_pipeline:
+    build: .
+    container_name: crypto_etl_pipeline
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: crypto_db
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      API_BASE_URL: https://api.coingecko.com/api/v3
+      VS_CURRENCY: usd
+      PER_PAGE: 50
+      PAGE: 1
+    volumes:
       - ./logs:/app/logs
       - ./data/raw:/app/data/raw
       - ./data/processed:/app/data/processed
 
+  airflow-db:
+    image: postgres:15
+    container_name: airflow_postgres
+    environment:
+      POSTGRES_DB: airflow_db
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+    volumes:
+      - airflow_postgres_data:/var/lib/postgresql/data
+
+  airflow-init:
+    image: apache/airflow:2.9.3
+    container_name: airflow_init
+    depends_on:
+      - airflow-db
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-db:5432/airflow_db
+      AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+    user: "50000:0"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./scripts:/opt/airflow/scripts
+      - ./logs:/opt/airflow/project_logs
+      - ./airflow_logs:/opt/airflow/logs
+      - ./airflow_plugins:/opt/airflow/plugins
+      - ./airflow_config:/opt/airflow/config
+      - ./data/raw:/opt/airflow/data/raw
+      - ./data/processed:/opt/airflow/data/processed
+    command: >
+      command: >
+      bash -c "airflow db migrate && airflow users create --username admin --firstname Haji --lastname Salim --role Admin --email admin@example.com --password admin"
+
+  airflow-webserver:
+    image: apache/airflow:2.9.3
+    container_name: airflow_webserver
+    depends_on:
+      - airflow-db
+      - airflow-init
+      - postgres
+    restart: always
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-db:5432/airflow_db
+      AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: crypto_db
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      API_BASE_URL: https://api.coingecko.com/api/v3
+      VS_CURRENCY: usd
+      PER_PAGE: 50
+      PAGE: 1
+    user: "50000:0"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./scripts:/opt/airflow/scripts
+      - ./logs:/opt/airflow/project_logs
+      - ./airflow_logs:/opt/airflow/logs
+      - ./airflow_plugins:/opt/airflow/plugins
+      - ./airflow_config:/opt/airflow/config
+      - ./data/raw:/opt/airflow/data/raw
+      - ./data/processed:/opt/airflow/data/processed
+    ports:
+      - "8080:8080"
+    command: webserver
+
+  airflow-scheduler:
+    image: apache/airflow:2.9.3
+    container_name: airflow_scheduler
+    depends_on:
+      - airflow-db
+      - airflow-init
+      - postgres
+    restart: always
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-db:5432/airflow_db
+      AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: crypto_db
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      API_BASE_URL: https://api.coingecko.com/api/v3
+      VS_CURRENCY: usd
+      PER_PAGE: 50
+      PAGE: 1
+    user: "50000:0"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./scripts:/opt/airflow/scripts
+      - ./logs:/opt/airflow/project_logs
+      - ./airflow_logs:/opt/airflow/logs
+      - ./airflow_plugins:/opt/airflow/plugins
+      - ./airflow_config:/opt/airflow/config
+      - ./data/raw:/opt/airflow/data/raw
+      - ./data/processed:/opt/airflow/data/processed
+    command: scheduler
+
 volumes:
   postgres_data:
+  airflow_postgres_data:
