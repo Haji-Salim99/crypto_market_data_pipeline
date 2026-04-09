@@ -4,7 +4,7 @@
 
 This project is an end-to-end Data Engineering pipeline that extracts cryptocurrency market data from a public API, transforms it into a clean and structured format, and loads it into a PostgreSQL database for analysis.
 
-The pipeline simulates a real-world data workflow, including raw data ingestion, transformation, incremental loading, and containerized deployment using Docker.
+The pipeline simulates a real-world data workflow and is fully containerized using Docker and orchestrated using Apache Airflow for automated execution..
 
 ## Objective
 
@@ -16,6 +16,7 @@ The goal of this project is to build a production-style ETL pipeline that:
 - Supports incremental loading (append-only design)
 - Tracks historical data using timestamps
 - Runs in a reproducible containerized environment using Docker
+- Automates execution using workflow orchestration
 
 ## Pipeline Architecture
 
@@ -48,12 +49,41 @@ The pipeline is fully containerized using Docker and Docker Compose.
   - Runs extraction, transformation, and loading
 - PostgreSQL Container
   - Stores processed cryptocurrency data
+- Airflow Services (scheduler + webserver + metadata DB)
 
 ### Workflow:
 
-Docker Compose
+Airflow Scheduler
 ↓
-ETL Container → PostgreSQL Container
+ETL Tasks → PostgreSQL Database
+
+## Workflow Orchestration with Apache Airflow
+
+The pipeline is orchestrated using Apache Airflow
+
+### DAG Structure
+
+The workflow is divided into three tasks:
+- extract_api_data
+- transform_crypto_data
+- load_to_postgres
+
+Task dependency:
+Extract → Transform → Load
+
+
+### Features of Airflow Integration
+
+- Automated task scheduling
+- Task dependency management
+- Retry mechanism
+- Logging and monitoring via UI
+- Workflow history tracking
+
+### Scheduling
+
+The pipeline is configured to run automatically:
+@daily
 
 ## Technologies Used
 
@@ -67,10 +97,16 @@ ETL Container → PostgreSQL Container
 - pathlib
 - Docker
 - Docker Compose
+- Apache Airflow
 
 ## Project Structure
 
-project2_crypto_pipeline/
+crypto_market_data_pipeline/
+│
+├── images/
+│ ├── airflow_dag.png 
+│ └── docker_container.png
+│ └── logs.png 
 │
 ├── data/
 │ ├── raw/ 
@@ -82,15 +118,38 @@ project2_crypto_pipeline/
 │ ├── load_to_postgres.py
 │ ├── run_pipeline.py
 │
-├── logs/ 
+├── dags/
+│ └── crypto_pipeline_dag.py
+│
+├── logs/
+├── airflow_logs/
 │
 ├── Dockerfile
 ├── docker-compose.yml
 ├── .dockerignore
 │
-├── .env # Environment variables
+├── .env
 ├── requirements.txt
 ├── README.md
+
+## Screenshots
+
+## Airflow DAG Execution
+
+![Airflow DAG](images/airflow_dag.png)
+
+---
+
+## Docker Services
+
+![Docker Containers](images/docker_container.png)
+
+---
+
+## Airflow DAG logs
+
+![Logs](images/logs.png)
+
 
 ## Features Implemented
 
@@ -105,9 +164,10 @@ project2_crypto_pipeline/
 - Logging per pipeline stage (extract, transform, load, pipeline)
 - Environment configuration using `.env`
 - Modular pipeline structure
-- Full pipeline orchestration via `run_pipeline.py`
-- Containerization using Docker
-- Multi-service orchestration using Docker Compose
+- Docker containerization
+- Multi-container orchestration
+- Airflow DAG automation
+- Scheduled pipeline execution
 
 ## Incremental Loading
 
@@ -148,6 +208,17 @@ docker compose run etl_pipeline
 3. To stop containers:
 docker compose down
 
+### Airflow Execution
+
+1. Start Airflow:
+docker compose up -d
+
+2. Open UI:
+http://localhost:8080
+
+3. Trigger DAG or wait for scheduled run.
+
+
 ## Example SQL Queries
 
 Check total records:
@@ -163,3 +234,20 @@ SELECT snapshot_timestamp, COUNT(*)
 FROM crypto_market_data
 GROUP BY snapshot_timestamp
 ORDER BY snapshot_timestamp;
+
+## Key Concepts Demonstrated
+ETL pipeline design
+Incremental data loading
+Data layering (raw → processed → DB)
+Docker containerization
+Service orchestration
+Workflow orchestration with Airflow
+Scheduling and automation
+Logging and monitoring
+
+## Future Improvements
+Cloud deployment (AWS / GCP / Azure)
+Data warehouse modeling (star schema)
+Streaming ingestion (Kafka)
+Data quality checks
+Dashboard visualization (Power BI / Streamlit)
