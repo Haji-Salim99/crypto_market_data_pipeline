@@ -38,3 +38,8 @@
 2026-04-09 12:48:06,280 - INFO - Processed data saved to: /opt/airflow/data/processed/cleaned_crypto_data_2026-04-09_12-48-06.csv
 2026-04-09 12:48:06,281 - INFO - Transformed DataFrame shape: (50, 19)
 2026-04-09 12:48:06,281 - INFO - Total rows after transformation: 50
+2026-04-10 15:21:02,783 - INFO - Latest raw file selected: /opt/airflow/data/raw/crypto_market_2026-04-10_15-20-56.json
+2026-04-10 15:21:02,802 - INFO - Raw DataFrame created with shape: (50, 26)
+2026-04-10 15:21:02,923 - INFO - Processed data saved to: /opt/airflow/data/processed/cleaned_crypto_data_2026-04-10_15-21-02.csv
+2026-04-10 15:21:02,924 - INFO - Transformed DataFrame shape: (50, 19)
+2026-04-10 15:21:02,925 - INFO - Total rows after transformation: 50

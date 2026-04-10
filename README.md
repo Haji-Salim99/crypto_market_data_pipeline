@@ -4,7 +4,7 @@
 
 This project is an end-to-end Data Engineering pipeline that extracts cryptocurrency market data from a public API, transforms it into a clean and structured format, and loads it into a PostgreSQL database for analysis.
 
-The pipeline simulates a real-world data workflow and is fully containerized using Docker and orchestrated using Apache Airflow for automated execution..
+The pipeline simulates a real-world data workflow and is fully containerized using Docker, orchestrated using Apache Airflow for automated execution and Power BI dashboard for insights visualization.
 
 ## Objective
 
@@ -82,6 +82,17 @@ Extract → Transform → Load
 The pipeline is configured to run automatically:
 @daily
 
+## Dashboard (Power BI)
+
+A simple Power BI dashboard was created to visualize insights from the pipeline data.
+
+### Key Insights:
+- Top cryptocurrencies by market capitalization
+- Market category distribution (large vs medium)
+- Price volatility (24h movement)
+- Pipeline data growth over time (proving automated ETL)
+
+
 ## Technologies Used
 
 - Python
@@ -95,6 +106,7 @@ The pipeline is configured to run automatically:
 - Docker
 - Docker Compose
 - Apache Airflow
+- Power BI
 
 ## Project Structure
 
@@ -105,6 +117,7 @@ crypto_market_data_pipeline/
 │ ├── airflow_dag.png 
 │ └── docker_container.png
 │ └── logs.png 
+│ └── powerbi_dashboard.png
 │
 ├── data/
 │ ├── raw/ 
@@ -118,6 +131,9 @@ crypto_market_data_pipeline/
 │
 ├── dags/
 │ └── crypto_pipeline_dag.py
+│
+├── dashboard/
+│ └── crypto_dashboard.pbix
 │
 ├── logs/
 ├── airflow_logs/
@@ -150,6 +166,12 @@ crypto_market_data_pipeline/
 
 ![Logs](images/logs.png)
 
+---
+
+## Power BI Dashboard
+
+![Power BI Dashboard](images/powerbi_dashboard.png)
+
 
 ## Features Implemented
 
@@ -168,6 +190,7 @@ crypto_market_data_pipeline/
 - Multi-container orchestration
 - Airflow DAG automation
 - Scheduled pipeline execution
+- Power BI dashboard
 
 ## Incremental Loading
 
@@ -244,10 +267,10 @@ Service orchestration
 Workflow orchestration with Airflow
 Scheduling and automation
 Logging and monitoring
+Power BI dashboard visualization
 
 ## Future Improvements
 Cloud deployment (AWS / GCP / Azure)
 Data warehouse modeling (star schema)
 Streaming ingestion (Kafka)
 Data quality checks
-Dashboard visualization (Power BI / Streamlit)

@@ -38,3 +38,8 @@
 2026-04-09 12:48:11,296 - INFO - Loaded DataFrame with shape: (50, 19)
 2026-04-09 12:48:11,366 - INFO - Data successfully loaded into table: crypto_market_data
 2026-04-09 12:48:11,368 - INFO - Rows inserted: 50
+2026-04-10 15:21:07,545 - INFO - Connected to PostgreSQL successfully
+2026-04-10 15:21:07,621 - INFO - Latest processed file selected: /opt/airflow/data/processed/cleaned_crypto_data_2026-04-10_15-21-02.csv
+2026-04-10 15:21:07,632 - INFO - Loaded DataFrame with shape: (50, 19)
+2026-04-10 15:21:07,855 - INFO - Data successfully loaded into table: crypto_market_data
+2026-04-10 15:21:07,856 - INFO - Rows inserted: 50

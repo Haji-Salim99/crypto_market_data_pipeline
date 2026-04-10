@@ -22,3 +22,6 @@
 2026-04-09 12:48:02,882 - INFO - Sending request to CoinGecko API...
 2026-04-09 12:48:03,317 - INFO - Raw data saved to: /opt/airflow/data/raw/crypto_market_2026-04-09_12-48-03.json
 2026-04-09 12:48:03,317 - INFO - Number of records fetched: 50
+2026-04-10 15:20:56,066 - INFO - Sending request to CoinGecko API...
+2026-04-10 15:20:56,567 - INFO - Raw data saved to: /opt/airflow/data/raw/crypto_market_2026-04-10_15-20-56.json
+2026-04-10 15:20:56,568 - INFO - Number of records fetched: 50
